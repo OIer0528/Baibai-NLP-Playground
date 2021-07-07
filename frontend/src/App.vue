@@ -1,17 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <el-container>
+      <el-header>
+        <h1>佰佰的 NLP 游乐场</h1>
+      </el-header>
+      <el-footer><Footer /></el-footer>
+    </el-container>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Footer from "./components/Footer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Footer,
+  },
+};
 </script>
 
 <style>
@@ -21,6 +27,22 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
+}
+
+body {
+  margin: 0px;
+}
+
+#app .el-header {
+  background: rgb(83, 168, 255);
+  color: #ffffff;
+}
+
+#app .el-footer {
+  background: rgb(179, 216, 255);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
 </style>
