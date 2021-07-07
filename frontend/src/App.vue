@@ -4,6 +4,21 @@
       <el-header>
         <h1>佰佰的 NLP 游乐场</h1>
       </el-header>
+      <el-main>
+        <el-input
+          type="textarea"
+          placeholder="请输入内容"
+          v-model="textBeforeConversion"
+          maxlength="200"
+          show-word-limit
+        >
+        </el-input>
+        <el-button type="primary" plain>显示分词结果</el-button>
+        <el-button type="primary" plain>显示词性标注结果</el-button>
+        <div>
+          <p>{{ textAfterConversion }}</p>
+        </div>
+      </el-main>
       <el-footer><Footer /></el-footer>
     </el-container>
   </div>
@@ -11,11 +26,23 @@
 
 <script>
 import Footer from "./components/Footer.vue";
+import { ref, computed } from "vue";
 
 export default {
   name: "App",
   components: {
     Footer,
+  },
+  setup() {
+    const textBeforeConversion = ref("");
+    const textAfterConversion = computed(() => {
+      return textBeforeConversion.value.split("");
+    });
+
+    return {
+      textBeforeConversion,
+      textAfterConversion,
+    };
   },
 };
 </script>
