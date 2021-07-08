@@ -2,9 +2,9 @@
   <div class="footer">
     <p>
       项目地址：
-      <el-link href="https://github.com/OIer0528/FirstThree">
+      <el-link href="https://github.com/OIer0528/Baibai-NLP-Playground">
         <img alt="GitHub Mark" src="../assets/GitHub-Mark-32px.png" />
-        OIer0528/FirstThree
+        OIer0528/Baibai-NLP-Playground
       </el-link>
     </p>
   </div>
