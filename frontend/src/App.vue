@@ -13,11 +13,20 @@
           show-word-limit
         >
         </el-input>
-        <el-button type="primary" plain>显示分词结果</el-button>
+
+        <el-button
+          type="primary"
+          plain
+          :disabled="wordSegmentationStatus == 'loading'"
+          @click="getWordSegmentationResult"
+        >
+          显示分词结果
+        </el-button>
         <el-button type="primary" plain>显示词性标注结果</el-button>
-        <div>
-          <p>{{ textAfterConversion }}</p>
-        </div>
+        <word-segmentation-box
+          :status="wordSegmentationStatus"
+          :results="wordSegmentationResults"
+        />
       </el-main>
       <el-footer><Footer /></el-footer>
     </el-container>
@@ -26,22 +35,33 @@
 
 <script>
 import Footer from "./components/Footer.vue";
-import { ref, computed } from "vue";
+import WordSegmentationBox from "./components/WordSegmentationBox.vue";
+import { ref } from "vue";
 
 export default {
   name: "App",
   components: {
     Footer,
+    WordSegmentationBox,
   },
   setup() {
     const textBeforeConversion = ref("");
-    const textAfterConversion = computed(() => {
-      return textBeforeConversion.value.split("");
-    });
+    const wordSegmentationStatus = ref("empty");
+    const wordSegmentationResults = ref([]);
+
+    const getWordSegmentationResult = () => {
+      wordSegmentationStatus.value = "loading";
+      setTimeout(() => {
+        wordSegmentationStatus.value = "ready";
+        wordSegmentationResults.value = textBeforeConversion.value.split("");
+      }, 1000);
+    };
 
     return {
       textBeforeConversion,
-      textAfterConversion,
+      wordSegmentationStatus,
+      wordSegmentationResults,
+      getWordSegmentationResult,
     };
   },
 };
@@ -64,6 +84,14 @@ body {
 #app .el-header {
   background: rgb(83, 168, 255);
   color: #ffffff;
+}
+
+#app .el-main .el-textarea {
+  margin-bottom: 1rem;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 1.2rem;
+  word-break: break-all;
 }
 
 #app .el-footer {
