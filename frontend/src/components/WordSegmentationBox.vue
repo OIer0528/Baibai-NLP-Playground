@@ -4,7 +4,10 @@
       <!-- empty -->
     </div>
     <div v-else-if="status == 'loading'">
-      <p><i class="el-icon-loading"></i>正在获取分词结果...</p>
+      <p><i class="el-icon-loading"></i> 正在获取分词结果...</p>
+    </div>
+    <div v-else-if="status == 'error'">
+      <p><i class="el-icon-error"></i> 获取分词结果失败！请稍后重试！</p>
     </div>
     <div v-else>
       <div class="desc">分词结果</div>
@@ -38,8 +41,6 @@ export default {
 }
 
 .desc {
-  /* color: white; */
-  /* background-color: rgb(83, 168, 255); */
   margin-bottom: 0.5rem;
   border-radius: 0.5rem;
   width: 70%;
@@ -54,7 +55,8 @@ export default {
   background-color: rgb(237, 246, 255);
   padding: 0.1rem;
   margin: 0.2rem 0.5rem;
-  height: 1rem;
+  height: 1.4rem;
+  min-width: 1rem;
 }
 
 .word:hover {

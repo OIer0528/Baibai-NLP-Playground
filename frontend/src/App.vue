@@ -8,7 +8,7 @@
         <el-input
           type="textarea"
           placeholder="请输入内容"
-          v-model="textBeforeConversion"
+          v-model="text"
           maxlength="200"
           show-word-limit
         >
@@ -18,7 +18,7 @@
           type="primary"
           plain
           :disabled="wordSegmentationStatus == 'loading'"
-          @click="getWordSegmentationResult"
+          @click="getWordSegmentationResults"
         >
           显示分词结果
         </el-button>
@@ -36,6 +36,7 @@
 <script>
 import Footer from "./components/Footer.vue";
 import WordSegmentationBox from "./components/WordSegmentationBox.vue";
+import axios from "axios";
 import { ref } from "vue";
 
 export default {
@@ -45,23 +46,29 @@ export default {
     WordSegmentationBox,
   },
   setup() {
-    const textBeforeConversion = ref("");
+    const text = ref("");
     const wordSegmentationStatus = ref("empty");
     const wordSegmentationResults = ref([]);
 
-    const getWordSegmentationResult = () => {
+    const getWordSegmentationResults = () => {
       wordSegmentationStatus.value = "loading";
-      setTimeout(() => {
-        wordSegmentationStatus.value = "ready";
-        wordSegmentationResults.value = textBeforeConversion.value.split("");
-      }, 1000);
+      axios
+        .get("/api/getWordSegmentationResults", { params: { text: text.value } })
+        .then((response) => {
+          wordSegmentationStatus.value = "ready";
+          wordSegmentationResults.value = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          wordSegmentationStatus.value = "error";
+        });
     };
 
     return {
-      textBeforeConversion,
+      text,
       wordSegmentationStatus,
       wordSegmentationResults,
-      getWordSegmentationResult,
+      getWordSegmentationResults,
     };
   },
 };
@@ -88,8 +95,6 @@ body {
 
 #app .el-main .el-textarea {
   margin-bottom: 1rem;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 1.2rem;
   word-break: break-all;
 }
