@@ -53,7 +53,9 @@ export default {
     const getWordSegmentationResults = () => {
       wordSegmentationStatus.value = "loading";
       axios
-        .get("/api/getWordSegmentationResults", { params: { text: text.value } })
+        .get("/api/getWordSegmentationResults", {
+          params: { text: text.value },
+        })
         .then((response) => {
           wordSegmentationStatus.value = "ready";
           wordSegmentationResults.value = response.data.results;

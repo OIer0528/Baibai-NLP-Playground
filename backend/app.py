@@ -5,6 +5,9 @@ from flask import Flask
 from flask import render_template
 from flask import request, jsonify
 
+# 导入中文分词包
+import jieba
+
 # 创建 flask 应用
 app = Flask(__name__, template_folder="")
 
@@ -21,8 +24,7 @@ def index():
 @app.route('/api/getWordSegmentationResults', methods=["GET"])
 def getWordSegmentationResults():
     text = str(request.args["text"])
-    print(text)
-    return jsonify({'results': list(text)})
+    return jsonify({'results': jieba.lcut(text)})
 
 
 if __name__ == "__main__":
